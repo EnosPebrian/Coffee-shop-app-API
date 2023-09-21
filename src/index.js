@@ -20,12 +20,12 @@ app.use(cors());
 app.use(express.json());
 app.use(bearertoken());
 
-app.use('/users', routers.userRouter);
-app.use('/products', routers.productRouter);
-app.use('/category', routers.categoryRouter);
-app.use('/transactions', routers.transactionRouter);
-app.use('/transaction_details', routers.transactionDetailRouter);
-app.use('/report', routers.reportRouter);
+app.use("/users", routers.userRouter);
+app.use("/products", routers.productRouter);
+app.use("/category", routers.categoryRouter);
+app.use("/transactions", routers.transactionRouter);
+app.use("/transaction_details", routers.transactionDetailRouter);
+app.use("/report", routers.reportRouter);
 
 app.use(
   "/public/product",
