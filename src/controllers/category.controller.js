@@ -1,3 +1,4 @@
+const db = require("../models");
 const { Sequelize, sequelize, Category, Product } = require("../models");
 
 const categoryController = {
@@ -12,14 +13,17 @@ const categoryController = {
   getPageCategories: async (req, res) => {
     try {
       const { page, limit } = req.query;
-
-      // const offset = Number(page == 1 ? 0 : (page - 1) * limit);
-      console.log(Number(limit));
+      const count = await Category.count();
       const result = await Category.findAndCountAll({
         limit: Number(limit),
         offset: Number(page),
+        include: [
+          {
+            model: db.Product,
+          },
+        ],
       });
-      const total_page = Math.ceil(result.count / limit);
+      const total_page = Math.ceil(count / limit);
       res.status(200).json({ total_page, ...result });
     } catch (error) {
       res.status(500).send(error?.message);

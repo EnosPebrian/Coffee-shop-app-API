@@ -13,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bearertoken());
 
+app.get("", (req, res) => res.send("Welcome to The Coffee Space"));
 app.use("/users", routers.userRouter);
 app.use("/products", routers.productRouter);
 app.use("/category", routers.categoryRouter);

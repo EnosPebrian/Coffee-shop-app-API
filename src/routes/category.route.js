@@ -3,7 +3,7 @@ const { categoryController } = require("../controllers");
 const router = require("express").Router();
 
 router.get("/", categoryController.getAllCategories);
-router.get("/page", categoryController.getPageCategories);
+router.get("/q", categoryController.getPageCategories);
 
 router.get("/name", categoryController.getCategoryByName);
 router.get("/:id", categoryController.getCategoryById);
