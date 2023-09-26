@@ -38,33 +38,18 @@ const reportController = {
         datefrom = new Date(new Date().setDate(datefrom.getDate() - 7));
       }
 
-      // const result = await Transaction.findAll({
-      //   logging: false,
-      //   limit: 7,
-      //   attributes: [
-      //     [sequelize.fn("SUM", sequelize.col("total")), "totalByCategory"],
-      //     [sequelize.fn("DATE", sequelize.col("createdAt")), "Date"],
-      //     "order_type",
-      //   ],
-      //   group: [
-      //     [sequelize.fn("DATE", sequelize.col("createdAt")), "Date"],
-      //     "order_type",
-      //   ],
-      //   where: {
-      //     createdAt: {
-      //       [Sequelize.Op.between]: [datefrom, dateto],
-      //     },
-      //   },
-      //   order: ["Date", "DESC"],
-      // });
-      const total = await Transaction.findAll({
+      const result = await Transaction.findAll({
         logging: false,
         limit: 7,
         attributes: [
-          [sequelize.fn("SUM", sequelize.col("total")), "totalByDate"],
+          [sequelize.fn("SUM", sequelize.col("total")), "totalByCategory"],
           [sequelize.fn("DATE", sequelize.col("createdAt")), "Date"],
+          "order_type",
         ],
-        group: [[sequelize.fn("DATE", sequelize.col("createdAt")), "Date"]],
+        group: [
+          [sequelize.fn("DATE", sequelize.col("createdAt")), "Date"],
+          "order_type",
+        ],
         where: {
           createdAt: {
             [Sequelize.Op.between]: [datefrom, dateto],
@@ -74,15 +59,15 @@ const reportController = {
       });
 
       const data = new Map();
-      total.forEach((val) => {
+      result.forEach((val) => {
         if (!data.has(val.dataValues.Date))
           data.set(val.dataValues.Date, { total: 0 });
         data.set(val.dataValues.Date, {
           ...data.get(val.dataValues.Date),
-          [val.dataValues.order_type]: val.dataValues.totalByCategory,
+          [val.dataValues.order_type]: Number(val.dataValues.totalByCategory),
           [`total`]:
             data.get(val.dataValues.Date).total +
-            val.dataValues.totalByCategory,
+            Number(val.dataValues.totalByCategory),
         });
       });
 
