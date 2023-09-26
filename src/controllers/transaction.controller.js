@@ -22,7 +22,7 @@ class TransactionController extends Controller {
 
   getAll = async (req, res) => {
     const page = Number(req.query.page);
-    const limit = 5;
+    const limit = 10;
     const { datefrom, dateto } = req.query;
     const data = await this.db.count({
       where: {
