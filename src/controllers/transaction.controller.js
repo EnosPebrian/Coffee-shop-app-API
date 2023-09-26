@@ -86,11 +86,12 @@ class TransactionController extends Controller {
         limit: limit,
         include: [
           { model: db.Transaction_details, include: [{ model: db.Product }] },
-          { model: db.Transaction_order_type },
           { model: db.User },
+          { model: db.Transaction_order_type, attributes: ["order_type"] },
         ],
       })
       .then((result) => {
+        console.log(result);
         res.send({
           count: data,
           number_of_page: Math.ceil(data / limit),
