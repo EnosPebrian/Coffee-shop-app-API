@@ -70,7 +70,7 @@ const reportController = {
             [Sequelize.Op.between]: [datefrom, dateto],
           },
         },
-        order: ["Date", "DESC"],
+        order: ["Date"],
       });
 
       const data = new Map();
