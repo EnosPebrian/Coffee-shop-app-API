@@ -40,7 +40,6 @@ const reportController = {
 
       const result = await Transaction.findAll({
         logging: false,
-        limit: 7,
         attributes: [
           [sequelize.fn("SUM", sequelize.col("total")), "totalByCategory"],
           [sequelize.fn("DATE", sequelize.col("createdAt")), "Date"],
@@ -60,6 +59,7 @@ const reportController = {
 
       const data = new Map();
       result.forEach((val) => {
+        console.log(val.dataValues);
         if (!data.has(val.dataValues.Date))
           data.set(val.dataValues.Date, { total: 0 });
         data.set(val.dataValues.Date, {
